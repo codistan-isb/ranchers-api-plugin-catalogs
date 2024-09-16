@@ -446,6 +446,9 @@ extend type Query {
 
     "By default, items are sorted by when they were last updated, most recently updated first. Set this to sort by one of the other allowed fields"
     sortBy: CatalogItemSortByField = updatedAt
+
+    #To handle banner images case
+    isBanner: Boolean
   ): CatalogItemConnection
 
   "Gets product from catalog"

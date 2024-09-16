@@ -11,9 +11,10 @@ import ReactionError from "@reactioncommerce/reaction-error";
  * @param {String[]} [params.searchQuery] - Optional text search query
  * @param {String[]} [params.shopIds] - Shop IDs to include (OR)
  * @param {String[]} [params.tags] - Tag IDs to include (OR)
+ * @param {Boolean} [params.isBanner] - Tag IDs to include (OR)
  * @returns {Promise<MongoCursor>} - A MongoDB cursor for the proper query
  */
-export default async function catalogItems(context, { searchQuery, shopIds, tagIds, catalogBooleanFilters } = {}) {
+export default async function catalogItems(context, { searchQuery, shopIds, tagIds, isBanner, catalogBooleanFilters } = {}) {
   const { collections } = context;
   const { Catalog } = collections;
 
@@ -29,12 +30,16 @@ export default async function catalogItems(context, { searchQuery, shopIds, tagI
 
   if (shopIds) query.shopId = { $in: shopIds };
   if (tagIds) query["product.tagIds"] = { $in: tagIds };
+  console.log("tagIds ", tagIds)
 
   if (searchQuery) {
     query.$text = {
       $search: _.escapeRegExp(searchQuery)
     };
   }
+  if (isBanner) query["product.slug"] = { $ne: "two-for-you" }
+  console.log("isBanner ", isBanner)
+  console.log("query ", query)
 
   return Catalog.find(query);
 }
