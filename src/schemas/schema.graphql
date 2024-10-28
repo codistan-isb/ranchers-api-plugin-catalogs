@@ -174,6 +174,12 @@ type CatalogProduct implements CatalogProductOrVariant & Node {
   "The weight of the product on Earth, if it has physical dimensions"
   weight: Float
 
+  priority: Float
+
+  rating: Float
+
+  reviewCount: Float
+
   "The width of the product, if it has physical dimensions"
   width: Float
 }
@@ -267,6 +273,8 @@ interface CatalogItem {
 
   "Date and time at which the item was last updated"
   updatedAt: DateTime
+
+  priority: Float
 }
 
 "Represents a catalog item that displays a product"
@@ -285,6 +293,8 @@ type CatalogItemProduct implements CatalogItem & Node {
 
   "The date and time at which this CatalogItem was last updated, which is when the related product was most recently published"
   updatedAt: DateTime!
+
+  priority: Float
 }
 
 "Represents a catalog item that displays some non-product content"
@@ -300,6 +310,8 @@ type CatalogItemContent implements CatalogItem & Node {
 
   "The date and time at which this CatalogItem was last updated"
   updatedAt: DateTime!
+
+  priority: Float
 }
 
 "A connection edge in which each node is a `CatalogItem` object"
@@ -367,6 +379,13 @@ enum CatalogItemSortByField {
 
   "Sort by date and time at which the item was last updated"
   updatedAt
+
+  priority
+}
+
+"Allowed values for sorting catalog.product items"
+enum CatalogItemSortByProductField {
+  priority
 }
 
 type Vendor {
@@ -415,37 +434,39 @@ extend type Query {
     shopIds: [ID]!
 
     "Optionally provide a list of tag IDs to further filter the item list"
-    tagIds: [ID],
+    tagIds: [ID]
 
     "Additional filters to apply"
-    booleanFilters: [CatalogBooleanFilter],
+    booleanFilters: [CatalogBooleanFilter]
 
     "Optional text search query"
-    searchQuery: String,
+    searchQuery: String
 
     "Return only results that come after this cursor. Use this with `first` to specify the number of results to return."
-    after: ConnectionCursor,
+    after: ConnectionCursor
 
     "Return only results that come before this cursor. Use this with `last` to specify the number of results to return."
-    before: ConnectionCursor,
+    before: ConnectionCursor
 
     "Return at most this many results. This parameter may be used with either `after` or `offset` parameters."
-    first: ConnectionLimitInt,
+    first: ConnectionLimitInt
 
     "Return at most this many results. This parameter may be used with the `before` parameter."
-    last: ConnectionLimitInt,
+    last: ConnectionLimitInt
 
     "Return only results that come after the Nth result. This parameter may be used with the `first` parameter."
-    offset: Int,
+    offset: Int
 
     "Return results sorted in this order"
-    sortOrder: SortOrder = desc,
+    sortOrder: SortOrder = asc
 
     "Provide a Currency code if sortBy is minPrice"
     sortByPriceCurrencyCode: String
 
     "By default, items are sorted by when they were last updated, most recently updated first. Set this to sort by one of the other allowed fields"
     sortBy: CatalogItemSortByField = updatedAt
+
+    sortByProductField: CatalogItemSortByProductField
 
     #To handle banner images case
     isBanner: Boolean
@@ -466,25 +487,25 @@ extend type Query {
   "Gets an array of all vendors"
   vendors(
     "Optionally provide a list of shop IDs from which you want to get the vendors"
-    shopIds: [ID],
+    shopIds: [ID]
 
     "Optionally provide a list of tag IDs to further filter the vendors"
-    tagIds: [ID],
+    tagIds: [ID]
 
     "Return only results that come after this cursor. Use this with `first` to specify the number of results to return."
-    after: ConnectionCursor,
+    after: ConnectionCursor
 
     "Return only results that come before this cursor. Use this with `last` to specify the number of results to return."
-    before: ConnectionCursor,
+    before: ConnectionCursor
 
     "Return at most this many results. This parameter may be used with either `after` or `offset` parameters."
-    first: ConnectionLimitInt,
+    first: ConnectionLimitInt
 
     "Return at most this many results. This parameter may be used with the `before` parameter."
-    last: ConnectionLimitInt,
+    last: ConnectionLimitInt
 
     "Return only results that come after the Nth result. This parameter may be used with the `first` parameter."
-    offset: Int,
+    offset: Int
 
     "Return results sorted in this order"
     sortOrder: SortOrder = asc
