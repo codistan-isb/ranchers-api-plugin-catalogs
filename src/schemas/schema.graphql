@@ -178,7 +178,7 @@ type CatalogProduct implements CatalogProductOrVariant & Node {
 
   rating: Float
 
-  reviewCount: Float
+  reviewCount: String
 
   "The width of the product, if it has physical dimensions"
   width: Float
