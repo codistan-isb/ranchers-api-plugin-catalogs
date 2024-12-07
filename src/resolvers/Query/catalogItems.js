@@ -23,6 +23,7 @@ import getPaginatedResponse from "../../utils/getPaginatedResponse.js";
  * @returns {Promise<Object>} A CatalogItemConnection object
  */
 export default async function catalogItems(_, args, context, info) {
+  const { redis } = context;
   const {
     shopIds: opaqueShopIds,
     tagIds: opaqueTagIds,
@@ -45,6 +46,26 @@ export default async function catalogItems(_, args, context, info) {
     );
   }
 
+  const redisKey = `catalogItems:${JSON.stringify(args)}`;
+
+  // Check if cached data exists and is valid
+  let cachedCatalogItems;
+  if (redis) {
+    try {
+      cachedCatalogItems = await redis.get(redisKey);
+    } catch (error) {
+      console.warn("Redis error:", error.message);
+    }
+  } else {
+    console.warn("Redis is not initialized. Skipping cache lookup.");
+  }
+
+  if (cachedCatalogItems) {
+    // Return cached data if available
+    console.log("Returning catalog items from Redis cache");
+    return JSON.parse(cachedCatalogItems);
+  }
+
   if (connectionArgs.sortBy === "featured") {
     if (!tagIds || tagIds.length === 0) {
       throw new ReactionError(
@@ -65,8 +86,13 @@ export default async function catalogItems(_, args, context, info) {
       searchQuery,
       shopIds,
       tagId,
-      isBanner,
+      isBanner
     });
+
+    // // Cache the result in Redis with expiry of 1 week (604800 seconds)
+    // const sanitizedItems = sanitizeForCache(featuredCatalogItems); // Sanitize the data before caching
+    // await redis.set(redisKey, JSON.stringify(sanitizedItems), "EX", 604800); // Cache for 1 week
+    // return featuredCatalogItems;
   }
 
   // minPrice is a sorting term that does not necessarily match the field path by which we truly want to sort.
@@ -102,14 +128,48 @@ export default async function catalogItems(_, args, context, info) {
     searchQuery,
     shopIds,
     tagIds,
-    isBanner,
+    isBanner
     // sortBy,
     // sortOrder,
   });
 
-  return getPaginatedResponse(query, connectionArgs, {
+  const res = await getPaginatedResponse(query, connectionArgs, {
     includeHasNextPage: wasFieldRequested("pageInfo.hasNextPage", info),
     includeHasPreviousPage: wasFieldRequested("pageInfo.hasPreviousPage", info),
-    includeTotalCount: wasFieldRequested("totalCount", info),
+    includeTotalCount: wasFieldRequested("totalCount", info)
   });
+
+  // Cache the result in Redis with expiry of 1 week (604800 seconds)
+  // const sanitizedQuery = sanitizeForCache(res); // Sanitize the data before caching
+  if (redis) {
+    try {
+      await redis.set(redisKey, JSON.stringify(res), "EX", 604800); // Cache for 1 week
+    } catch (error) {
+      console.warn("Redis error:", error.message);
+    }
+  } else {
+    console.warn("Redis is not initialized. Skipping cache storage.");
+  }
+
+  // console.log("res", res);
+
+  return res;
+}
+
+// Helper function to avoid circular references in MongoDB objects
+function sanitizeForCache(object) {
+  const cacheSafeObject = JSON.parse(
+    JSON.stringify(object, (key, value) => {
+      // You can customize the circular structure removal here if needed
+      if (
+        value &&
+        value.constructor &&
+        value.constructor.name === "NativeTopology"
+      ) {
+        return undefined; // Avoid circular references
+      }
+      return value;
+    })
+  );
+  return cacheSafeObject;
 }
