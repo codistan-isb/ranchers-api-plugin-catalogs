@@ -47,9 +47,14 @@ export default async function catalogItems(_, args, context, info) {
   }
 
   const redisKey = `catalogItems:${JSON.stringify(args)}`;
+  const isCatalogUpdated = await redis.get("isCatalogUpdated")
+  console.log("isCatalogUpdated ",isCatalogUpdated)
 
   // Check if cached data exists and is valid
   let cachedCatalogItems;
+  console.log(
+    "redis ",redis
+  )
   if (redis) {
     try {
       cachedCatalogItems = await redis.get(redisKey);
@@ -62,7 +67,7 @@ export default async function catalogItems(_, args, context, info) {
 
   if (cachedCatalogItems) {
     // Return cached data if available
-    console.log("Returning catalog items from Redis cache");
+    console.log("Returning catalog items from Redis cache ");
     return JSON.parse(cachedCatalogItems);
   }
 
@@ -143,7 +148,9 @@ export default async function catalogItems(_, args, context, info) {
   // const sanitizedQuery = sanitizeForCache(res); // Sanitize the data before caching
   if (redis) {
     try {
+      console.log("isCatalogUpdated false")
       await redis.set(redisKey, JSON.stringify(res), "EX", 604800); // Cache for 1 week
+      await redis.set("isCatalogUpdated", false, "EX", 604800);
     } catch (error) {
       console.warn("Redis error:", error.message);
     }

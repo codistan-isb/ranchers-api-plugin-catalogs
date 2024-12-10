@@ -49,5 +49,6 @@ export default async function publishProducts(context, productIds) {
       "Some Products could not be published to the Catalog. Make sure the parent product and its variants and options are visible."
     );
   }
+  console.log("is It final step")
   return Catalog.find({ "product.productId": { $in: productIds } }).toArray();
 }
