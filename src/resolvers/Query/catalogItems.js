@@ -45,15 +45,19 @@ export default async function catalogItems(_, args, context, info) {
       booleanFilters
     );
   }
+  let isCatalogUpdated,redisKey;
+  if (redis) {
+    redisKey = `catalogItems:${JSON.stringify(args)}`;
+    isCatalogUpdated = await redis?.get("isCatalogUpdated")
+    console.log("isCatalogUpdated ", isCatalogUpdated)
+  }
 
-  const redisKey = `catalogItems:${JSON.stringify(args)}`;
-  const isCatalogUpdated = await redis.get("isCatalogUpdated")
-  console.log("isCatalogUpdated ",isCatalogUpdated)
+
 
   // Check if cached data exists and is valid
   let cachedCatalogItems;
   console.log(
-    "redis ",redis
+    "redis ", redis
   )
   if (redis) {
     try {
@@ -117,7 +121,7 @@ export default async function catalogItems(_, args, context, info) {
     if (!realSortByField) {
       Logger.warn(
         "An attempt to sort catalog items by minPrice was rejected. " +
-          "Verify that you have a pricing plugin installed and it registers a getMinPriceSortByFieldPath function."
+        "Verify that you have a pricing plugin installed and it registers a getMinPriceSortByFieldPath function."
       );
       throw new ReactionError(
         "invalid-parameter",
