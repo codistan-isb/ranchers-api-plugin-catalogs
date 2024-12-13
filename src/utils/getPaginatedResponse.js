@@ -402,9 +402,14 @@ function getMongoSort({ sortBy, sortByProductField, sortOrder } = {}) {
   const sortObject = {};
 
   // If sortByProductField is provided, ignore sortBy
-  if (sortByProductField) {
-    sortObject[`product.${sortByProductField}`] = mongoSortDirection;
-  } else if (sortBy && sortBy !== "_id") {
+  // if (sortByProductField) {
+  //   sortObject[`product.${sortByProductField}`] = mongoSortDirection;
+  // } else if (sortBy && sortBy !== "_id") {
+  //   // Only add sortBy if sortByProductField is not provided
+  //   sortObject[sortBy] = mongoSortDirection;
+  // }
+  if (sortBy && sortBy !== "_id") {
+    console.log("sortBy ",sortBy)
     // Only add sortBy if sortByProductField is not provided
     sortObject[sortBy] = mongoSortDirection;
   }

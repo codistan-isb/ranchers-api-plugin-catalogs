@@ -45,7 +45,7 @@ export default async function catalogItems(_, args, context, info) {
       booleanFilters
     );
   }
-  let isCatalogUpdated,redisKey;
+  let isCatalogUpdated, redisKey;
   if (redis) {
     redisKey = `catalogItems:${JSON.stringify(args)}`;
     isCatalogUpdated = await redis?.get("isCatalogUpdated")
@@ -69,11 +69,11 @@ export default async function catalogItems(_, args, context, info) {
     console.warn("Redis is not initialized. Skipping cache lookup.");
   }
 
-  if (cachedCatalogItems) {
-    // Return cached data if available
-    console.log("Returning catalog items from Redis cache ");
-    return JSON.parse(cachedCatalogItems);
-  }
+  // if (cachedCatalogItems) {
+  //   // Return cached data if available
+  //   console.log("Returning catalog items from Redis cache ");
+  //   return JSON.parse(cachedCatalogItems);
+  // }
 
   if (connectionArgs.sortBy === "featured") {
     if (!tagIds || tagIds.length === 0) {
@@ -141,6 +141,7 @@ export default async function catalogItems(_, args, context, info) {
     // sortBy,
     // sortOrder,
   });
+  connectionArgs.sortBy="priority"
 
   const res = await getPaginatedResponse(query, connectionArgs, {
     includeHasNextPage: wasFieldRequested("pageInfo.hasNextPage", info),
@@ -150,19 +151,24 @@ export default async function catalogItems(_, args, context, info) {
 
   // Cache the result in Redis with expiry of 1 week (604800 seconds)
   // const sanitizedQuery = sanitizeForCache(res); // Sanitize the data before caching
-  if (redis) {
-    try {
-      console.log("isCatalogUpdated false")
-      await redis.set(redisKey, JSON.stringify(res), "EX", 604800); // Cache for 1 week
-      await redis.set("isCatalogUpdated", false, "EX", 604800);
-    } catch (error) {
-      console.warn("Redis error:", error.message);
-    }
-  } else {
-    console.warn("Redis is not initialized. Skipping cache storage.");
-  }
-
-  // console.log("res", res);
+  // if (redis) {
+  //   try {
+  //     console.log("isCatalogUpdated false")
+  //     await redis.set(redisKey, JSON.stringify(res), "EX", 604800); // Cache for 1 week
+  //     await redis.set("isCatalogUpdated", false, "EX", 604800);
+  //   } catch (error) {
+  //     console.warn("Redis error:", error.message);
+  //   }
+  // } else {
+  //   console.warn("Redis is not initialized. Skipping cache storage.");
+  // }
+  // res.nodes.sort((a, b) => {
+  //   if (a.priority === null || a.priority === undefined) return 1;
+  //   if (b.priority === null || b.priority === undefined) return -1;
+  //   return a.priority - b.priority;
+  // });
+  
+  console.log(res);
 
   return res;
 }
