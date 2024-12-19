@@ -50,26 +50,32 @@ export default async function publishProductToCatalog(product, context) {
     modifier,
     { upsert: true }
   );
-  console.log("isRedisUpdateding ")
-  await redis.set("isCatalogUpdated", true, "EX", 604800);
+
+  if (redis) {
+    console.log("isRedisUpdateding ")
+    await redis.set("isCatalogUpdated", true, "EX", 604800);
+  }
+
   const pattern = 'catalogItems*';
   let cursor = '0'; // Initial cursor
   let keysToDelete = [];
+  if (redis) {
+    // Use SCAN to iterate through keys
+    do {
+      const [newCursor, keys] = await redis.scan(cursor, 'MATCH', pattern, 'COUNT', 100);
+      cursor = newCursor;
+      keysToDelete = keysToDelete.concat(keys); // Collect matching keys
+    } while (cursor !== '0'); // Continue until the cursor loops back to '0'
 
-  // Use SCAN to iterate through keys
-  do {
-    const [newCursor, keys] = await redis.scan(cursor, 'MATCH', pattern, 'COUNT', 100);
-    cursor = newCursor;
-    keysToDelete = keysToDelete.concat(keys); // Collect matching keys
-  } while (cursor !== '0'); // Continue until the cursor loops back to '0'
-
-  if (keysToDelete.length > 0) {
-    // Delete the matched keys
-    await redis.del(...keysToDelete);
-    console.log(`${keysToDelete.length} keys deleted.`);
-  } else {
-    console.log('No keys to delete.');
+    if (keysToDelete.length > 0) {
+      // Delete the matched keys
+      await redis.del(...keysToDelete);
+      console.log(`${keysToDelete.length} keys deleted.`);
+    } else {
+      console.log('No keys to delete.');
+    }
   }
+
 
   const wasUpdateSuccessful = result && result.result && result.result.ok === 1;
   if (wasUpdateSuccessful) {
