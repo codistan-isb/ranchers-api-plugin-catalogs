@@ -5,7 +5,6 @@ import wasFieldRequested from "@reactioncommerce/api-utils/graphql/wasFieldReque
 import { decodeShopOpaqueId, decodeTagOpaqueId } from "../../xforms/id.js";
 import xformCatalogBooleanFilters from "../../utils/catalogBooleanFilters.js";
 import getPaginatedResponse from "../../utils/getPaginatedResponse.js";
-import bannerImages from "../../utils/bannerImagesJSON.json";
 
 /**
  * @name Query/catalogItems
