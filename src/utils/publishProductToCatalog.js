@@ -50,6 +50,7 @@ export default async function publishProductToCatalog(product, context) {
     modifier,
     { upsert: true }
   );
+  console.log("result ",result)
 
   if (redis) {
     console.log("isRedisUpdateding ")

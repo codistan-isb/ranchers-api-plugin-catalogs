@@ -345,6 +345,8 @@ export const CatalogProductVariant = CatalogProductOption.clone().extend({
  * @property {String} vendor optional
  * @property {Number} weight optional, default value: `0`
  * @property {Number} width optional, default value: `0`
+ * @property {Number} rating optional, default value: `0`
+ * @property {String} reviewCount optional, default value: `0`
  */
 export const CatalogProduct = new SimpleSchema({
   "_id": {
@@ -521,7 +523,15 @@ export const CatalogProduct = new SimpleSchema({
     min: 0,
     optional: true,
     defaultValue: 0
-  }
+  },
+  "rating": {
+    type: Number,
+    optional: true
+  },
+  "reviewCount": {
+    type: String,
+    optional: true
+  },
 });
 
 /**
