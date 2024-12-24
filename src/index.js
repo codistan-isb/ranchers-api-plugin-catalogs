@@ -60,6 +60,38 @@ export default async function register(app) {
             }
           ]
         ]
+      },
+      BannerImage: {
+        name: "BannerImage",
+        indexes: [
+          // Without _id: 1 on these, they cannot be used for sorting by createdAt
+          // because all sorts include _id: 1 as secondary sort to be fully stable.
+          [{ createdAt: 1, _id: 1 }],
+          [{ updatedAt: 1, _id: 1 }],
+          [{ shopId: 1 }],
+          [{ "product._id": 1 }, { unique: true }],
+          [{ "product.productId": 1 }, { unique: true }],
+          [{ "product.slug": 1 }],
+          [{ "product.tagIds": 1 }],
+          // Name field is needed due to MongoDB max index name size of 127 chars
+          [
+            {
+              "product.barcode": "text",
+              "product.description": "text",
+              "product.metafields.key": "text",
+              "product.metafields.value": "text",
+              "product.metaDescription": "text",
+              "product.pageTitle": "text",
+              "product.sku": "text",
+              "product.slug": "text",
+              "product.title": "text",
+              "product.vendor": "text"
+            },
+            {
+              name: "product_search_index"
+            }
+          ]
+        ]
       }
     },
     functionsByType: {

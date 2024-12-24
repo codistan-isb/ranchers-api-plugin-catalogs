@@ -18,7 +18,7 @@ export default async function catalogItems(context, params) {
   const { searchQuery, shopIds, tagIds, isBanner, catalogBooleanFilters } =
     params;
   const { collections } = context;
-  const { Catalog } = collections;
+  const { Catalog, BannerImage } = collections;
 
   if ((!shopIds || shopIds.length === 0) && (!tagIds || tagIds.length === 0)) {
     throw new ReactionError(
@@ -42,9 +42,10 @@ export default async function catalogItems(context, params) {
       $search: _.escapeRegExp(searchQuery),
     };
   }
-  if (isBanner) query["product.slug"] = { $ne: "two-for-you" };
   console.log("isBanner ", isBanner);
   console.log("query ", query);
-
+  if (isBanner){
+    return BannerImage.find({ ...query });
+  }
   return Catalog.find({ ...query });
 }

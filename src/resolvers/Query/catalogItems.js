@@ -5,6 +5,7 @@ import wasFieldRequested from "@reactioncommerce/api-utils/graphql/wasFieldReque
 import { decodeShopOpaqueId, decodeTagOpaqueId } from "../../xforms/id.js";
 import xformCatalogBooleanFilters from "../../utils/catalogBooleanFilters.js";
 import getPaginatedResponse from "../../utils/getPaginatedResponse.js";
+import bannerImages from "../../utils/bannerImagesJSON.json";
 
 /**
  * @name Query/catalogItems
@@ -45,12 +46,22 @@ export default async function catalogItems(_, args, context, info) {
       booleanFilters
     );
   }
-  let isCatalogUpdated, redisKey;
+  let isCatalogUpdated, redisKey,ifRedisNotWorking
+
   if (redis) {
-    redisKey = `catalogItems:${JSON.stringify(args)}`;
-    isCatalogUpdated = await redis?.get("isCatalogUpdated")
-    console.log("isCatalogUpdated ", isCatalogUpdated)
+    try {
+      redisKey = `catalogItems:${JSON.stringify(args)}`;
+      isCatalogUpdated = await redis?.get("isCatalogUpdated")
+      console.log("isCatalogUpdated ", isCatalogUpdated)
+    } catch (err) {
+      console.log("err ",err)
+      ifRedisNotWorking=true;
+    }
+
   }
+  console.log("ifRedisNotWorking ",ifRedisNotWorking)
+  console.log("isCatalogUpdated ",isCatalogUpdated)
+  console.log("typeof ",typeof(isCatalogUpdated))
 
 
 
@@ -59,7 +70,7 @@ export default async function catalogItems(_, args, context, info) {
   console.log(
     "redis ", redis
   )
-  if (redis) {
+  if (redis&&ifRedisNotWorking!=true&&isCatalogUpdated!="true") {
     try {
       cachedCatalogItems = await redis.get(redisKey);
     } catch (error) {
@@ -141,7 +152,7 @@ export default async function catalogItems(_, args, context, info) {
     // sortBy,
     // sortOrder,
   });
-  connectionArgs.sortBy="priority"
+  connectionArgs.sortBy = "priority"
 
   const res = await getPaginatedResponse(query, connectionArgs, {
     includeHasNextPage: wasFieldRequested("pageInfo.hasNextPage", info),
@@ -151,7 +162,7 @@ export default async function catalogItems(_, args, context, info) {
 
   // Cache the result in Redis with expiry of 1 week (604800 seconds)
   // const sanitizedQuery = sanitizeForCache(res); // Sanitize the data before caching
-  if (redis) {
+  if (redis&&ifRedisNotWorking!=true) {
     try {
       console.log("isCatalogUpdated false")
       await redis.set(redisKey, JSON.stringify(res), "EX", 604800); // Cache for 1 week
@@ -162,8 +173,12 @@ export default async function catalogItems(_, args, context, info) {
   } else {
     console.warn("Redis is not initialized. Skipping cache storage.");
   }
-  
+
   console.log(res);
+  console.log("res[0]",res.nodes[0])
+  console.log("res[1]",res.nodes[1])
+  console.log("res[2]",res.nodes[2])
+  console.log("res[3]",res.nodes[3])
 
   return res;
 }

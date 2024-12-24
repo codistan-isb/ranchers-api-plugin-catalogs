@@ -1,0 +1,156 @@
+{
+    "totalCount": 4,
+    "pageInfo": {
+        "endCursor": "UGN2dWplWldHZ0VHbUJkOXc=",
+        "startCursor": "VG1rckUzYkc0d0tvOXRZSG0=",
+        "hasNextPage": false,
+        "hasPreviousPage": false,
+        "__typename": "PageInfo"
+    },
+    "nodes": [
+        {
+            "_id": "cmVhY3Rpb24vY2F0YWxvZ0l0ZW06VG1rckUzYkc0d0tvOXRZSG0=",
+            "product": {
+                "isDeal": true,
+                "_id": "cmVhY3Rpb24vY2F0YWxvZ1Byb2R1Y3Q6SlNjcjRod3VZaUxwNkRqbW0=",
+                "title": "Banner Image 1",
+                "slug": "Banner Image 1",
+                "description": "Any 2 burgers and any 2 drinks",
+                "vendor": null,
+                "productId": "cmVhY3Rpb24vcHJvZHVjdDpKU2NyNGh3dVlpTHA2RGptbQ==",
+                "isLowQuantity": false,
+                "isSoldOut": false,
+                "isBackorder": true,
+                "featuredImage": "https://ranchers.s3.ap-southeast-1.amazonaws.com/app-banners/delivering+happiness+1920x650.webp",
+                "isFeatured": null,
+                "primaryImage": {
+                    "URLs": {
+                        "thumbnail": "https://ranchers.s3.ap-southeast-1.amazonaws.com/app-banners/delivering+happiness+1920x650.webp",
+                        "small": "https://ranchers.s3.ap-southeast-1.amazonaws.com/app-banners/delivering+happiness+1920x650.webp",
+                        "medium": "https://ranchers.s3.ap-southeast-1.amazonaws.com/app-banners/delivering+happiness+1920x650.webp",
+                        "large": "https://ranchers.s3.ap-southeast-1.amazonaws.com/app-banners/delivering+happiness+1920x650.webp",
+                        "__typename": "ImageSizes"
+                    },
+                    "__typename": "ImageInfo"
+                },
+                "__typename": "CatalogProduct"
+            },
+            "__typename": "CatalogItemProduct"
+        },
+        {
+            "_id": "cmVhY3Rpb24vY2F0YWxvZ0l0ZW06NUF3QlNRak5MS1RubnM5aHc=",
+            "product": {
+                "isDeal": true,
+                "_id": "cmVhY3Rpb24vY2F0YWxvZ1Byb2R1Y3Q6V2NFd0FyTUZwUk1Cd3JycjM=",
+                "title": "Banner Image 2",
+                "slug": "Banner Image 2",
+                "description": "2 Large Pan Pizza 1.5 Ltr. Drink.",
+                "vendor": null,
+                "productId": "cmVhY3Rpb24vcHJvZHVjdDpXY0V3QXJNRnBSTUJ3cnJyMw==",
+                "isLowQuantity": false,
+                "isSoldOut": false,
+                "isBackorder": true,
+                "featuredImage": "https://ranchers.s3.ap-southeast-1.amazonaws.com/app-banners/fast+food+brand+1920x650.webp",
+                "isFeatured": null,
+                "primaryImage": {
+                    "URLs": {
+                        "thumbnail": "https://ranchers.s3.ap-southeast-1.amazonaws.com/app-banners/fast+food+brand+1920x650.webp",
+                        "small": "https://ranchers.s3.ap-southeast-1.amazonaws.com/app-banners/fast+food+brand+1920x650.webp",
+                        "medium": "https://ranchers.s3.ap-southeast-1.amazonaws.com/app-banners/fast+food+brand+1920x650.webp",
+                        "large": "https://ranchers.s3.ap-southeast-1.amazonaws.com/app-banners/fast+food+brand+1920x650.webp",
+                        "__typename": "ImageSizes"
+                    },
+                    "__typename": "ImageInfo"
+                },
+                "__typename": "CatalogProduct"
+            },
+            "__typename": "CatalogItemProduct"
+        },
+        {
+            "_id": "cmVhY3Rpb24vY2F0YWxvZ0l0ZW06UXBzWktvRTZpZWtHd2p6c3Y=",
+            "product": {
+                "isDeal": true,
+                "_id": "cmVhY3Rpb24vY2F0YWxvZ1Byb2R1Y3Q6V2NFd0FyTUZwUk1Cd2Zhcmk=",
+                "title": "Banner Image 3",
+                "slug": "Banner Image 3",
+                "description": "4 x Krunch Burgers, 1 Ltr. Drink",
+                "vendor": null,
+                "productId": "cmVhY3Rpb24vcHJvZHVjdDpXY0V3QXJNRnBSTUJ3ZmFyaQ==",
+                "isLowQuantity": false,
+                "isSoldOut": false,
+                "isBackorder": true,
+                "featuredImage": "https://ranchers.s3.ap-southeast-1.amazonaws.com/app-banners/locations+1920x650.webp",
+                "isFeatured": null,
+                "primaryImage": {
+                    "URLs": {
+                        "thumbnail": "https://ranchers.s3.ap-southeast-1.amazonaws.com/app-banners/locations+1920x650.webp",
+                        "small": "https://ranchers.s3.ap-southeast-1.amazonaws.com/app-banners/locations+1920x650.webp",
+                        "medium": "https://ranchers.s3.ap-southeast-1.amazonaws.com/app-banners/locations+1920x650.webp",
+                        "large": "https://ranchers.s3.ap-southeast-1.amazonaws.com/app-banners/locations+1920x650.webp",
+                        "__typename": "ImageSizes"
+                    },
+                    "__typename": "ImageInfo"
+                },
+                "__typename": "CatalogProduct"
+            },
+            "__typename": "CatalogItemProduct"
+        },
+        {
+            "_id": "cmVhY3Rpb24vY2F0YWxvZ0l0ZW06UGN2dWplWldHZ0VHbUJkOXc=",
+            "product": {
+                "isDeal": true,
+                "_id": "cmVhY3Rpb24vY2F0YWxvZ1Byb2R1Y3Q6QkNmZVNpdm1ma1RBbTQzY2M=",
+                "title": "Banner Image 4",
+                "slug": "Banner Image 4",
+                "description": "3 x Cowboy Burgers, 1 x Small Frizza, 3 x Reg. Drink",
+                "vendor": null,
+                "productId": "cmVhY3Rpb24vcHJvZHVjdDpCQ2ZlU2l2bWZrVEFtNDNjYw==",
+                "isLowQuantity": false,
+                "isSoldOut": false,
+                "isBackorder": true,
+                "featuredImage": "https://ranchers.s3.ap-southeast-1.amazonaws.com/app-banners/smoky+gun+fries+1920x800.webp",
+                "isFeatured": null,
+                "primaryImage": {
+                    "URLs": {
+                        "thumbnail": "https://ranchers.s3.ap-southeast-1.amazonaws.com/app-banners/smoky+gun+fries+1920x800.webp",
+                        "small": "https://ranchers.s3.ap-southeast-1.amazonaws.com/app-banners/smoky+gun+fries+1920x800.webp",
+                        "medium": "https://ranchers.s3.ap-southeast-1.amazonaws.com/app-banners/smoky+gun+fries+1920x800.webp",
+                        "large": "https://ranchers.s3.ap-southeast-1.amazonaws.com/app-banners/smoky+gun+fries+1920x800.webp",
+                        "__typename": "ImageSizes"
+                    },
+                    "__typename": "ImageInfo"
+                },
+                "__typename": "CatalogProduct"
+            },
+            "__typename": "CatalogItemProduct"
+        },
+        {
+            "_id": "cmVhY3Rpb24vY2F0YWxvZ0l0ZW06UGN2dWplWldHZ0VHbUJkOzzz",
+            "product": {
+                "isDeal": true,
+                "_id": "cmVhY3Rpb24vY2F0YWxvZ1Byb2R1Y3Q6QkNmZVNpdm1ma1RBbTQzY2M=",
+                "title": "Banner Image 5",
+                "slug": "Banner Image 5",
+                "description": "3 x Cowboy Burgers, 1 x Small Frizza, 3 x Reg. Drink",
+                "vendor": null,
+                "productId": "cmVhY3Rpb24vcHJvZHVjdDpCQ2ZlU2l2bWZrVEFtNDNjYvvv",
+                "isLowQuantity": false,
+                "isSoldOut": false,
+                "featuredImage": "https://ranchers.s3.ap-southeast-1.amazonaws.com/app-banners/web+banner+1920x800.webp",
+                "isFeatured": null,
+                "primaryImage": {
+                    "URLs": {
+                        "thumbnail": "https://ranchers.s3.ap-southeast-1.amazonaws.com/app-banners/web+banner+1920x800.webp",
+                        "small": "https://ranchers.s3.ap-southeast-1.amazonaws.com/app-banners/web+banner+1920x800.webp",
+                        "medium": "https://ranchers.s3.ap-southeast-1.amazonaws.com/app-banners/web+banner+1920x800.webp",
+                        "large": "https://ranchers.s3.ap-southeast-1.amazonaws.com/app-banners/web+banner+1920x800.webp",
+                        "__typename": "ImageSizes"
+                    },
+                    "__typename": "ImageInfo"
+                },
+                "__typename": "CatalogProduct"
+            },
+            "__typename": "CatalogItemProduct"
+        }
+    ]
+}
