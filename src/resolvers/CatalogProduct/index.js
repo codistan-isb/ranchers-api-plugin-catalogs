@@ -6,8 +6,10 @@ import { encodeProductOpaqueId, encodeCatalogProductOpaqueId } from "../../xform
 
 export default {
   _id: (node) => encodeCatalogProductOpaqueId(node._id),
-  media: (node, args, context) => node.media && node.media.map((mediaItem) => xformCatalogProductMedia(mediaItem, context)),
-  primaryImage: (node, args, context) => xformCatalogProductMedia(node.primaryImage, context),
+  media: (node, args, context) => node.media ,
+ // media: (node, args, context) => node.media && node.media.map((mediaItem) => xformCatalogProductMedia(mediaItem, context)),
+  //primaryImage: (node, args, context) => xformCatalogProductMedia(node.primaryImage, context),
+  primaryImage: (node, args, context) => node.primaryImage,
   productId: (node) => encodeProductOpaqueId(node.productId),
   shop: resolveShopFromShopId,
   variants: (node, args, context, info) => node.variants && xformCatalogProductVariants(context, node.variants, {
