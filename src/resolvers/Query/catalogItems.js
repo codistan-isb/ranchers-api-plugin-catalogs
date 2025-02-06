@@ -69,6 +69,9 @@ export default async function catalogItems(_, args, context, info) {
   console.log(
     "redis ", redis
   )
+  console.log("ifRedisNotWorking!=true ",ifRedisNotWorking!=true)
+  console.log(`isCatalogUpdated!="true"`,isCatalogUpdated!="true")
+  console.log("redis&&ifRedisNotWorking!=true&&isCatalogUpdated!=true ",(redis&&ifRedisNotWorking!=true&&isCatalogUpdated!="true"))
   if (redis&&ifRedisNotWorking!=true&&isCatalogUpdated!="true") {
     try {
       cachedCatalogItems = await redis.get(redisKey);
@@ -82,6 +85,7 @@ export default async function catalogItems(_, args, context, info) {
   if (cachedCatalogItems) {
     // Return cached data if available
     console.log("Returning catalog items from Redis cache ");
+    console.log("cachedCatalogItems ",cachedCatalogItems)
     return JSON.parse(cachedCatalogItems);
   }
 

@@ -15,7 +15,7 @@ import publishProductsToCatalog from "../utils/publishProductsToCatalog.js";
 export default async function publishProducts(context, productIds) {
   const { collections } = context;
   const { Catalog, Products } = collections;
-
+  console.log("productIds ",productIds)
   // Find all products
   const products = await Products.find(
     {
@@ -23,6 +23,7 @@ export default async function publishProducts(context, productIds) {
     },
     { _id: 1, shopId: 1 }
   ).toArray();
+  console.log("products ",products)
 
   if (products.length !== productIds.length) {
     throw new ReactionError("not-found", "Some products not found");
