@@ -427,6 +427,61 @@ type VendorConnection {
   totalCount: Int!
 }
 
+"A banner image with a featured image URL"
+type BannerImageV2 {
+  "The banner image ID"
+  _id: ID!
+
+  "The featured image URL"
+  featuredImage: String!
+
+  "The date and time at which this banner was created"
+  createdAt: DateTime!
+
+  "The date and time at which this banner was last updated"
+  updatedAt: DateTime!
+
+  "The tags associated with this banner"
+  tagIds: [ID]
+
+  "Whether the banner is currently active"
+  isActive: Boolean
+}
+
+"A connection edge in which each node is a BannerImageV2"
+type BannerImageEdge {
+  "The cursor that represents this node in the paginated results"
+  cursor: ConnectionCursor!
+
+  "The banner image"
+  node: BannerImageV2
+}
+
+"""
+Wraps a list of `BannerImageV2`, providing pagination cursors and information.
+
+For information about what Relay-compatible connections are and how to use them, see the following articles:
+- [Relay Connection Documentation](https://facebook.github.io/relay/docs/en/graphql-server-specification.html#connections)
+- [Relay Connection Specification](https://facebook.github.io/relay/graphql/connections.htm)
+- [Using Relay-style Connections With Apollo Client](https://www.apollographql.com/docs/react/recipes/pagination.html)
+"""
+type BannerImageConnection {
+  "The list of nodes that match the query, wrapped in an edge to provide a cursor string for each"
+  edges: [BannerImageEdge]
+
+  """
+  You can request the `nodes` directly to avoid the extra wrapping that `NodeEdge` has,
+  if you know you will not need to paginate the results.
+  """
+  nodes: [BannerImageV2]
+
+  "Information to help a client request the next or previous page"
+  pageInfo: PageInfo!
+
+  "The total number of nodes that match your query"
+  totalCount: Int!
+}
+
 extend type Query {
   "Gets items from a shop catalog"
   catalogItems(
@@ -510,6 +565,30 @@ extend type Query {
     "Return results sorted in this order"
     sortOrder: SortOrder = asc
   ): VendorConnection
+
+  "Gets a list of banner images"
+  bannerImages(
+    "Optionally provide a list of tag IDs to filter banner images"
+    tagIds: [ID]
+
+    "Optionally filter by active status"
+    isActive: Boolean
+
+    "Return only results that come after this cursor. Use this with `first` to specify the number of results to return."
+    after: ConnectionCursor
+
+    "Return only results that come before this cursor. Use this with `last` to specify the number of results to return."
+    before: ConnectionCursor
+
+    "Return at most this many results. This parameter may be used with either `after` or `offset` parameters."
+    first: ConnectionLimitInt
+
+    "Return at most this many results. This parameter may be used with the `before` parameter."
+    last: ConnectionLimitInt
+
+    "Return only results that come after the Nth result. This parameter may be used with the `first` parameter."
+    offset: Int
+  ): BannerImageConnection
 }
 
 extend type Mutation {
@@ -518,4 +597,25 @@ extend type Mutation {
     "Array of Product ID"
     productIds: [ID]!
   ): [CatalogItemProduct]
+
+  "Update banner image in BannerImageV2 collection"
+  updateBannerImage(
+    "ID of the banner image to update"
+    bannerId: ID!
+    
+    "The featured image URL to update"
+    featuredImage: String!
+  ): BannerImageV2
+
+  "Add a new banner image to BannerImageV2 collection"
+  addBannerImage(
+    "The featured image URL"
+    featuredImage: String!
+
+    "Optional array of tag IDs to associate with the banner"
+    tagIds: [ID]
+
+    "Whether the banner should be active"
+    isActive: Boolean = true
+  ): BannerImageV2
 }

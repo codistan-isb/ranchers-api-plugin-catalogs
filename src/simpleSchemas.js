@@ -566,3 +566,44 @@ export const Catalog = new SimpleSchema({
     label: "Updated at"
   }
 });
+
+/**
+ * @name BannerImageV2
+ * @memberof Schemas
+ * @type {SimpleSchema}
+ * @property {String} _id required
+ * @property {String} featuredImage required
+ * @property {Date} createdAt required
+ * @property {Date} updatedAt required
+ */
+export const BannerImageV2 = new SimpleSchema({
+  _id: {
+    type: String,
+    label: "Banner Image ID"
+  },
+  featuredImage: {
+    type: String,
+    label: "Featured Image URL"
+  },
+  createdAt: {
+    type: Date,
+    label: "Created At"
+  },
+  updatedAt: {
+    type: Date,
+    label: "Updated At"
+  }
+});
+
+export default {
+  Metafield,
+  ShippingParcel,
+  ImageSizes,
+  ImageInfo,
+  SocialMetadata,
+  CatalogProductOption,
+  CatalogProductVariant,
+  CatalogProduct,
+  Catalog,
+  BannerImageV2
+};

@@ -92,6 +92,13 @@ export default async function register(app) {
             }
           ]
         ]
+      },
+      BannerImageV2: {
+        name: "BannerImageV2",
+        indexes: [
+          [{ createdAt: 1, _id: 1 }],
+          [{ updatedAt: 1, _id: 1 }]
+        ]
       }
     },
     functionsByType: {

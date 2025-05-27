@@ -5,6 +5,7 @@ import findCatalogProductsAndVariants from "./findCatalogProductsAndVariants.js"
 import findProductAndVariant from "./findProductAndVariant.js";
 import findVariantInCatalogProduct from "./findVariantInCatalogProduct.js";
 import vendors from "./vendors.js";
+import bannerImages from "./bannerImages.js";
 
 export default {
   catalogItems,
@@ -13,5 +14,6 @@ export default {
   findCatalogProductsAndVariants,
   findProductAndVariant,
   findVariantInCatalogProduct,
-  vendors
+  vendors,
+  bannerImages
 };
