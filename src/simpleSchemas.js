@@ -347,6 +347,8 @@ export const CatalogProductVariant = CatalogProductOption.clone().extend({
  * @property {Number} width optional, default value: `0`
  * @property {Number} rating optional, default value: `0`
  * @property {String} reviewCount optional, default value: `0`
+ * @property {Boolean} isDelivery Indicates if product is available for delivery
+ * @property {Boolean} isTakeaway Indicates if product is available for takeaway
  */
 export const CatalogProduct = new SimpleSchema({
   "_id": {
@@ -383,6 +385,16 @@ export const CatalogProduct = new SimpleSchema({
     type: Boolean,
     label: "Indicates if a product is visible to shoppers",
     defaultValue: false
+  },
+  "isDelivery": {
+    type: Boolean,
+    label: "Indicates if product is available for delivery",
+    optional: true
+  },
+  "isTakeaway": {
+    type: Boolean,
+    label: "Indicates if product is available for takeaway",
+    optional: true
   },
   "length": {
     type: Number,

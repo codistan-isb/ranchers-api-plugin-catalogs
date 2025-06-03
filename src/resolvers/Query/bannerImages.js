@@ -16,22 +16,28 @@ import { decodeTagOpaqueId } from "../../xforms/id.js";
  * @returns {Promise<Object>} A BannerImageConnection object
  */
 export default async function bannerImages(_, args, context, info) {
-  const {
-    tagIds: opaqueTagIds,
-    isActive,
-    ...connectionArgs
-  } = args;
+    const {
+        tagIds: opaqueTagIds,
+        isActive,
+        ...connectionArgs
+    } = args;
+    console.log("context ", context);
+    if (context.user === undefined || context.user === null) {
+        throw new ReactionError(
+            "access-denied",
+            "Unauthorized access. Please Login First"
+        );
+    }
+    const tagIds = opaqueTagIds && opaqueTagIds.map(decodeTagOpaqueId);
 
-  const tagIds = opaqueTagIds && opaqueTagIds.map(decodeTagOpaqueId);
+    const query = await context.queries.bannerImages(context, {
+        tagIds,
+        isActive
+    });
 
-  const query = await context.queries.bannerImages(context, {
-    tagIds,
-    isActive
-  });
-
-  return getPaginatedResponse(query, connectionArgs, {
-    includeHasNextPage: wasFieldRequested("pageInfo.hasNextPage", info),
-    includeHasPreviousPage: wasFieldRequested("pageInfo.hasPreviousPage", info),
-    includeTotalCount: wasFieldRequested("totalCount", info)
-  });
+    return getPaginatedResponse(query, connectionArgs, {
+        includeHasNextPage: wasFieldRequested("pageInfo.hasNextPage", info),
+        includeHasPreviousPage: wasFieldRequested("pageInfo.hasPreviousPage", info),
+        includeTotalCount: wasFieldRequested("totalCount", info)
+    });
 } 

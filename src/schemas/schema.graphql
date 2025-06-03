@@ -182,6 +182,10 @@ type CatalogProduct implements CatalogProductOrVariant & Node {
 
   "The width of the product, if it has physical dimensions"
   width: Float
+
+  isTakeaway: Boolean
+
+  isDelivery: Boolean
 }
 
 "A variant of a catalog product"
@@ -618,4 +622,49 @@ extend type Mutation {
     "Whether the banner should be active"
     isActive: Boolean = true
   ): BannerImageV2
+
+  "Update product delivery options in Products collection"
+  updateProductDeliveryOptions(
+    "Product ID to update"
+    productId: ID!
+
+    "Whether the product is available for delivery"
+    isDelivery: Boolean!
+
+    "Whether the product is available for takeaway"
+    isTakeaway: Boolean!
+  ): Product
+
+  "Bulk update delivery options for all products"
+  bulkUpdateDeliveryOptions(
+    "Whether to update products collection"
+    updateProducts: Boolean = true
+    
+    "Whether to update catalog collection"
+    updateCatalog: Boolean = true
+  ): BulkOperationResult
+}
+
+"Result of a bulk operation"
+type BulkOperationResult {
+  "Number of documents updated"
+  updatedCount: Int!
+  
+  "Whether the operation was successful"
+  success: Boolean!
+  
+  "Error message if operation failed"
+  message: String
+}
+
+"A product"
+type Product {
+  "The product ID"
+  _id: ID!
+
+  "Whether the product is available for delivery"
+  isDelivery: Boolean
+
+  "Whether the product is available for takeaway"
+  isTakeaway: Boolean
 }
