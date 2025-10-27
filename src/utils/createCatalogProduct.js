@@ -123,6 +123,8 @@ export async function xformProduct({ context, product, variants }) {
     width: product.width,
     isTakeaway: product.isTakeaway,
     isDelivery: product.isDelivery,
+    isTimeBound: product.isTimeBound,
+    timeBounds: product.timeBounds
   };
 }
 

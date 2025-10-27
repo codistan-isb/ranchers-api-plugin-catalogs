@@ -40,6 +40,15 @@ type SocialMetadata {
   service: SocialNetwork
 }
 
+"Time boundaries for time-bound products"
+type TimeBounds {
+  "Start time in 24-hour format (e.g., '23:00')"
+  startTime: String
+
+  "End time in 24-hour format (e.g., '01:00')"
+  endTime: String
+}
+
 "This interface represents the fields that are identical for both Products and Variants"
 interface CatalogProductOrVariant {
   "The product barcode value, if it has one"
@@ -186,6 +195,12 @@ type CatalogProduct implements CatalogProductOrVariant & Node {
   isTakeaway: Boolean
 
   isDelivery: Boolean
+
+  "Whether this product is time-bound"
+  isTimeBound: Boolean
+
+  "Time boundaries for time-bound products"
+  timeBounds: TimeBounds
 }
 
 "A variant of a catalog product"

@@ -160,6 +160,26 @@ export const SocialMetadata = new SimpleSchema({
 });
 
 /**
+ * @name TimeBounds
+ * @memberof Schemas
+ * @type {SimpleSchema}
+ * @property {String} startTime Start time in 24-hour format
+ * @property {String} endTime End time in 24-hour format
+ */
+export const TimeBounds = new SimpleSchema({
+  startTime: {
+    type: String,
+    label: "Start Time",
+    optional: true
+  },
+  endTime: {
+    type: String,
+    label: "End Time",
+    optional: true
+  }
+});
+
+/**
  * @name CatalogProductOption
  * @memberof Schemas
  * @type {SimpleSchema}
@@ -396,6 +416,16 @@ export const CatalogProduct = new SimpleSchema({
     label: "Indicates if product is available for takeaway",
     optional: true
   },
+  "isTimeBound": {
+    type: Boolean,
+    label: "Indicates if product has time restrictions",
+    optional: true
+  },
+  "timeBounds": {
+    type: TimeBounds,
+    label: "Time boundaries for time-bound products",
+    optional: true
+  },
   "length": {
     type: Number,
     label: "Length",
@@ -613,6 +643,7 @@ export default {
   ImageSizes,
   ImageInfo,
   SocialMetadata,
+  TimeBounds,
   CatalogProductOption,
   CatalogProductVariant,
   CatalogProduct,
