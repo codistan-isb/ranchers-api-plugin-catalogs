@@ -42,7 +42,6 @@ export default async function updateProductDeliveryOptions(context, input) {
       returnOriginal: false
     }
   );
-  console.log("updatedProduct", updatedProduct);
 
   if (!updatedProduct) {
     throw new ReactionError("server-error", "Failed to update product");
@@ -50,7 +49,6 @@ export default async function updateProductDeliveryOptions(context, input) {
 
   // After updating the product, publish the changes to the Catalog
   const success = await context.mutations.publishProducts(context, [productId]);
-  console.log("success ",success)
 
   return updatedProduct;
 } 

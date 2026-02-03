@@ -14,16 +14,12 @@ import ReactionError from "@reactioncommerce/reaction-error";
 export default async function updateBannerImage(context, { bannerId, featuredImage }) {
   const { collections, redis } = context;
   const { BannerImageV2 } = collections;
-  console.log("bannerId ", bannerId);
 
   // Check if banner exists
   const banner = await BannerImageV2.findOne({ _id: bannerId });
-  console.log("banner", banner);
   if (!banner) {
     throw new ReactionError("not-found", "Banner not found");
   }
-  console.log("bannerId", bannerId);
-  console.log("featuredImage", featuredImage);
 
   // Update the banner with new featured image
   const { value: updatedBanner } = await BannerImageV2.findOneAndUpdate(
@@ -38,7 +34,6 @@ export default async function updateBannerImage(context, { bannerId, featuredIma
       returnDocument: "after"
     }
   );
-  console.log("updatedBanner", updatedBanner);
 
   if (!updatedBanner) {
     throw new ReactionError("server-error", "Error updating banner image");

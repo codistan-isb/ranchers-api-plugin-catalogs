@@ -35,15 +35,12 @@ export default async function catalogItems(context, params) {
 
   if (shopIds) query.shopId = { $in: shopIds };
   if (tagIds) query["product.tagIds"] = { $in: tagIds };
-  console.log("tagIds ", tagIds);
 
   if (searchQuery) {
     query.$text = {
       $search: _.escapeRegExp(searchQuery),
     };
   }
-  console.log("isBanner ", isBanner);
-  console.log("query ", query);
   if (isBanner){
     return BannerImage.find({ ...query });
   }

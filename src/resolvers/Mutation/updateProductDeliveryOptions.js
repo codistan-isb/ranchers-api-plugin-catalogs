@@ -15,7 +15,6 @@ import { decodeProductOpaqueId } from "../../xforms/id.js";
  */
 export default async function updateProductDeliveryOptions(_, args, context) {
   const { productId, isDelivery, isTakeaway } = args;
-  console.log("productId before decode", productId);
 
   const decodedProductId = decodeProductOpaqueId(productId);
 

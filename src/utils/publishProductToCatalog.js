@@ -17,11 +17,9 @@ export default async function publishProductToCatalog(product, context) {
   const { Catalog, Products } = collections;
 
   const startTime = Date.now();
-  console.log("productttt ",product)
 
   // Convert Product schema object to Catalog schema object
   const catalogProduct = await createCatalogProduct(product, context);
-  console.log("catalogProduct ",catalogProduct)
 
   // Check to see if product has variants
   // If not, do not publish the product to the Catalog
@@ -52,17 +50,15 @@ export default async function publishProductToCatalog(product, context) {
     modifier,
     { upsert: true }
   );
-  console.log("result ",result)
 
   if (redis) {
     console.log("isRedisUpdateding ")
     await redis.set("isCatalogUpdated", true, "EX", 604800);
-  }
+  
 
   const pattern = 'catalogItems*';
   let cursor = '0'; // Initial cursor
   let keysToDelete = [];
-  if (redis) {
     // Use SCAN to iterate through keys
     do {
       const [newCursor, keys] = await redis.scan(cursor, 'MATCH', pattern, 'COUNT', 100);
@@ -106,7 +102,9 @@ export default async function publishProductToCatalog(product, context) {
       catalogProduct,
       product: updatedProduct
     });
-
+  await appEvents.emit("updateRedis", {
+      catalogProduct
+    });
     Logger.debug({
       name: "cart",
       ms: Date.now() - startTime,

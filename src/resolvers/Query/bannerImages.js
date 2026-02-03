@@ -21,7 +21,6 @@ export default async function bannerImages(_, args, context, info) {
         isActive,
         ...connectionArgs
     } = args;
-    console.log("context ", context);
     if (context.user === undefined || context.user === null) {
         throw new ReactionError(
             "access-denied",

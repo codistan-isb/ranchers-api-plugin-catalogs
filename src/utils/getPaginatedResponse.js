@@ -35,7 +35,6 @@ async function getPaginatedResponse(
     includeTotalCount = true,
   } = {}
 ) {
-  console.log("getPaginatedResponse,args:", args);
   const { offset, last, sortBy, sortOrder, sortByProductField } = args;
   const baseFilter = mongoCursor.cmd.query;
 
@@ -409,7 +408,6 @@ function getMongoSort({ sortBy, sortByProductField, sortOrder } = {}) {
   //   sortObject[sortBy] = mongoSortDirection;
   // }
   if (sortBy && sortBy !== "_id") {
-    console.log("sortBy ",sortBy)
     // Only add sortBy if sortByProductField is not provided
     sortObject[sortBy] = mongoSortDirection;
   }

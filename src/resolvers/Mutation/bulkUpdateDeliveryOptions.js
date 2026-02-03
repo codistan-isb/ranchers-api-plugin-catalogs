@@ -52,7 +52,6 @@ export default async function bulkUpdateDeliveryOptions(_, args, context) {
       );
       updatedCount += catalogResult.modifiedCount;
     }
-    console.log("updateProducts ",updateProducts)
 
     // If we updated products, we should republish them to sync the changes
     // if (updateProducts) {

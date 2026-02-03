@@ -34,7 +34,6 @@ export default async function catalogItems(_, args, context, info) {
     // sortOrder,
     ...connectionArgs
   } = args;
-  console.log("isBanner ", isBanner);
   const shopIds = opaqueShopIds && opaqueShopIds.map(decodeShopOpaqueId);
   const tagIds = opaqueTagIds && opaqueTagIds.map(decodeTagOpaqueId);
 
@@ -51,27 +50,19 @@ export default async function catalogItems(_, args, context, info) {
     try {
       redisKey = `catalogItems:${JSON.stringify(args)}`;
       isCatalogUpdated = await redis?.get("isCatalogUpdated")
-      console.log("isCatalogUpdated ", isCatalogUpdated)
     } catch (err) {
       console.log("err ",err)
       ifRedisNotWorking=true;
     }
 
   }
-  console.log("ifRedisNotWorking ",ifRedisNotWorking)
-  console.log("isCatalogUpdated ",isCatalogUpdated)
-  console.log("typeof ",typeof(isCatalogUpdated))
+
 
 
 
   // Check if cached data exists and is valid
   let cachedCatalogItems;
-  console.log(
-    "redis ", redis
-  )
-  console.log("ifRedisNotWorking!=true ",ifRedisNotWorking!=true)
-  console.log(`isCatalogUpdated!="true"`,isCatalogUpdated!="true")
-  console.log("redis&&ifRedisNotWorking!=true&&isCatalogUpdated!=true ",(redis&&ifRedisNotWorking!=true&&isCatalogUpdated!="true"))
+ 
   if (redis&&ifRedisNotWorking!=true&&isCatalogUpdated!="true") {
     try {
       cachedCatalogItems = await redis.get(redisKey);
@@ -85,7 +76,6 @@ export default async function catalogItems(_, args, context, info) {
   if (cachedCatalogItems) {
     // Return cached data if available
     console.log("Returning catalog items from Redis cache ");
-    console.log("cachedCatalogItems ",cachedCatalogItems)
     return JSON.parse(cachedCatalogItems);
   }
 
@@ -177,11 +167,7 @@ export default async function catalogItems(_, args, context, info) {
     console.warn("Redis is not initialized. Skipping cache storage.");
   }
 
-  console.log(res);
-  console.log("res[0]",res.nodes[0])
-  console.log("res[1]",res.nodes[1])
-  console.log("res[2]",res.nodes[2])
-  console.log("res[3]",res.nodes[3])
+
 
   return res;
 }
