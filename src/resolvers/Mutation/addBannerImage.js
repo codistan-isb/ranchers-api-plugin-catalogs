@@ -15,16 +15,26 @@ import { decodeTagOpaqueId } from "../../xforms/id.js";
  */
 export default async function addBannerImage(_, args, context) {
   const {
+    bannerId,
     featuredImage,
     tagIds: opaqueTagIds,
-    isActive
+    isActive,
+    startAt,
+    endAt,
+    priority,
+    title
   } = args;
 
   const tagIds = opaqueTagIds && opaqueTagIds.map(decodeTagOpaqueId);
 
   const banner = await context.mutations.addBannerImage(context, {
+    bannerId,
     featuredImage,
     tagIds,
+    startAt,
+    endAt,
+    priority,
+    title,
     isActive
   });
 

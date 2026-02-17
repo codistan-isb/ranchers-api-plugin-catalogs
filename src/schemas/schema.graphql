@@ -465,6 +465,14 @@ type BannerImageV2 {
 
   "Whether the banner is currently active"
   isActive: Boolean
+
+  priority: Int
+
+  startAt:String
+
+  endAt: String
+
+ title: String
 }
 
 "A connection edge in which each node is a BannerImageV2"
@@ -628,6 +636,8 @@ extend type Mutation {
 
   "Add a new banner image to BannerImageV2 collection"
   addBannerImage(
+
+    title: String!
     "The featured image URL"
     featuredImage: String!
 
@@ -636,6 +646,9 @@ extend type Mutation {
 
     "Whether the banner should be active"
     isActive: Boolean = true
+    startAt: String
+    endAt: String
+    priority: Int
   ): BannerImageV2
 
   "Update product delivery options in Products collection"

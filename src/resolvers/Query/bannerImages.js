@@ -1,3 +1,4 @@
+import ReactionError from "@reactioncommerce/reaction-error";
 import getPaginatedResponse from "../../utils/getPaginatedResponse.js";
 import wasFieldRequested from "@reactioncommerce/api-utils/graphql/wasFieldRequested.js";
 import { decodeTagOpaqueId } from "../../xforms/id.js";
@@ -21,12 +22,12 @@ export default async function bannerImages(_, args, context, info) {
         isActive,
         ...connectionArgs
     } = args;
-    if (context.user === undefined || context.user === null) {
-        throw new ReactionError(
-            "access-denied",
-            "Unauthorized access. Please Login First"
-        );
-    }
+    // if (context.user === undefined || context.user === null) {
+    //     throw new ReactionError(
+    //         "access-denied",
+    //         "Unauthorized access. Please Login First"
+    //     );
+    // }
     const tagIds = opaqueTagIds && opaqueTagIds.map(decodeTagOpaqueId);
 
     const query = await context.queries.bannerImages(context, {
