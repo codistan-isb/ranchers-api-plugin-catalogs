@@ -600,7 +600,8 @@ extend type Query {
 
     "Optionally filter by active status"
     isActive: Boolean
-
+    
+    isAdmin:Boolean
     "Return only results that come after this cursor. Use this with `first` to specify the number of results to return."
     after: ConnectionCursor
 

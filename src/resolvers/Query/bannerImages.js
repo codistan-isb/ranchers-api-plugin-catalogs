@@ -20,6 +20,7 @@ export default async function bannerImages(_, args, context, info) {
     const {
         tagIds: opaqueTagIds,
         isActive,
+        isAdmin,
         ...connectionArgs
     } = args;
     // if (context.user === undefined || context.user === null) {
@@ -32,7 +33,8 @@ export default async function bannerImages(_, args, context, info) {
 
     const query = await context.queries.bannerImages(context, {
         tagIds,
-        isActive
+        isActive,
+        isAdmin
     });
 
     return getPaginatedResponse(query, connectionArgs, {
