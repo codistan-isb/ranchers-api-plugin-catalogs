@@ -617,7 +617,9 @@ extend type Query {
     offset: Int
   ): BannerImageConnection
 }
-
+type removeBannerImage{
+  Id:ID
+}
 extend type Mutation {
   "Publish products to the Catalog collection by product ID"
   publishProductsToCatalog(
@@ -650,6 +652,8 @@ extend type Mutation {
     endAt: String
     priority: Int
   ): BannerImageV2
+
+  removeBannerImage (bannerId:ID):removeBannerImage
 
   "Update product delivery options in Products collection"
   updateProductDeliveryOptions(
